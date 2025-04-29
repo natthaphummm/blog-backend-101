@@ -1,8 +1,8 @@
 import { Request, Response } from "express";
-import { IPostService } from "../interfaces";
+import { ICourseService } from "../interfaces";
 
-export default class PostController {
-    constructor(private readonly service: IPostService) {}
+export default class CourseController {
+    constructor(private readonly service: ICourseService) {}
 
     async getAll(req: Request, res: Response) {
         const result = await this.service.getAll();

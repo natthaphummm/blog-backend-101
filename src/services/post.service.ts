@@ -8,6 +8,7 @@ export default class PostService implements IPostService {
         const posts = await prisma.post.findMany();
         return posts;
     }
+
     async getById(id: number): Promise<Post> {
         const post = await prisma.post.findUnique({
             where: { id },
@@ -17,12 +18,14 @@ export default class PostService implements IPostService {
         }
         return post as Post;
     }
+
     async create(data: PostCreate): Promise<Post> {
         const post = await prisma.post.create({
             data,
         });
         return post as Post;
     }
+
     async update(id: number, data: PostUpdate): Promise<Post> {
         const postExists = await prisma.post.findUnique({
             where: { id },
@@ -37,6 +40,7 @@ export default class PostService implements IPostService {
         });
         return post as Post;
     }
+
     async delete(id: number): Promise<void> {
         const postExists = await prisma.post.findUnique({
             where: { id },
