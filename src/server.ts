@@ -1,14 +1,16 @@
 import express, { Express } from "express";
 import cors from "cors";
 import helmet from "helmet";
+import cookieParser from "cookie-parser";
 import { rateLimit } from "express-rate-limit";
 import swaggerUi from "swagger-ui-express";
 import { config } from "./config/env";
 
-import { errorHandler, notFound } from "./middleware/error";
+import { errorHandler, notFound } from "./middleware/error.middleware";
 
 import postRoute from "./routes/post.route";
 import courseRoute from "./routes/course.route";
+import authRoute from "./routes/auth.route";
 
 export default class Server {
     private readonly app: Express;
@@ -27,6 +29,7 @@ export default class Server {
         this.app.use(helmet());
         this.app.use(express.json());
         this.app.use(express.urlencoded({ extended: true }));
+        this.app.use(cookieParser());
         this.app.use(
             rateLimit({
                 windowMs: 1 * 60 * 1000,
@@ -40,6 +43,7 @@ export default class Server {
     private initRoutes() {
         this.app.use("/api/v1/posts", postRoute);
         this.app.use("/api/v1/courses", courseRoute);
+        this.app.use("/api/v1/auth", authRoute);
 
         this.app.use(notFound);
         this.app.use(errorHandler);

@@ -11,7 +11,7 @@ export const errorHandler = (
 
     if (!(error instanceof ApiError)) {
         const statusCode = error.statusCode || 500;
-        const message = error.message || "Something went wrong";
+        const message = error.message || "Internal Server Error";
         error = new ApiError(
             statusCode,
             message,

@@ -1,7 +1,7 @@
 import BaseRoute from "./base.route";
 import CourseController from "../controllers/course.controller";
 import CourseService from "../services/course.service";
-import { validate } from "../middleware/validate";
+import { validate } from "../middleware/validate.middleware";
 import { CourseCreateSchema, CourseUpdateSchema } from "../schemas";
 
 export class CourseRoute extends BaseRoute {

@@ -1,6 +1,5 @@
 import { Request, Response, NextFunction } from "express";
-import { z, AnyZodObject } from "zod";
-
+import { AnyZodObject } from "zod";
 export const validate = (
     schema: AnyZodObject,
     source: "body" | "params" | "query" = "body"

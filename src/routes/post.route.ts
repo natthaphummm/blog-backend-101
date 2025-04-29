@@ -1,8 +1,9 @@
 import BaseRoute from "./base.route";
 import PostController from "../controllers/post.controller";
 import PostService from "../services/post.service";
-import { validate } from "../middleware/validate";
+import { validate } from "../middleware/validate.middleware";
 import { PostCreateSchema, PostUpdateSchema } from "../schemas";
+import { authenticate, authorize } from "../middleware/auth.middleware";
 
 export class PostRoute extends BaseRoute {
     constructor() {
@@ -10,7 +11,12 @@ export class PostRoute extends BaseRoute {
     }
 
     protected initRoutes(): void {
-        this.router.get("/", this.controller.getAll.bind(this.controller));
+        this.router.get(
+            "/",
+            authenticate,
+            authorize(["ADMIN"]),
+            this.controller.getAll.bind(this.controller)
+        );
         this.router.get("/:id", this.controller.getById.bind(this.controller));
         this.router.post(
             "/",
