@@ -1,1 +1,1 @@
-export * from "./services/hello.service.interface";
+export * from "./services/post.service.interface";

@@ -5,7 +5,9 @@ import { rateLimit } from "express-rate-limit";
 import swaggerUi from "swagger-ui-express";
 import { config } from "./config/env";
 
-import helloRoute from "./routes/hello.route";
+import { errorHandler, notFound } from "./middleware/error";
+
+import postRoute from "./routes/post.route";
 
 export default class Server {
     private readonly app: Express;
@@ -35,7 +37,10 @@ export default class Server {
     }
 
     private initRoutes() {
-        this.app.use("/api/v1/hello", helloRoute);
+        this.app.use("/api/v1/posts", postRoute);
+
+        this.app.use(notFound);
+        this.app.use(errorHandler);
     }
 
     public start() {
