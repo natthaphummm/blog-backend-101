@@ -39,7 +39,7 @@ export const authorize = (roles: string[]) => {
         if (!req.user || !roles.includes(req.user.role)) {
             throw new ApiError(
                 403,
-                "You don't have permission to access this resource",
+                'You dont have permission to access this resource',
             );
         }
         next();
