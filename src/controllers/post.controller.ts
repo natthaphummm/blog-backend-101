@@ -10,11 +10,13 @@ export default class PostController {
     }
 
     async getById(req: Request, res: Response) {
+        console.log(req.params.id);
         const result = await this.service.getById(Number(req.params.id));
         res.status(200).json(result);
     }
 
     async create(req: Request, res: Response) {
+        console.log(req.body);
         const result = await this.service.create(req.body);
         res.status(201).json(result);
     }

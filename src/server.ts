@@ -7,18 +7,26 @@ import swaggerUi from "swagger-ui-express";
 import { config } from "./config/env";
 
 import { errorHandler, notFound } from "./middleware/error.middleware";
+import { ApiRegistry } from "./utils/apiRegistry";
 
 import postRoute from "./routes/post.route";
 import courseRoute from "./routes/course.route";
 import authRoute from "./routes/auth.route";
 
+import {
+    OpenAPIRegistry,
+    OpenApiGeneratorV3,
+} from "@asteasolutions/zod-to-openapi";
+
 export default class Server {
     private readonly app: Express;
     private readonly port: number;
+    private readonly apiRegistry: OpenAPIRegistry;
 
     constructor() {
         this.app = express();
         this.port = config.server.port;
+        this.apiRegistry = ApiRegistry.getInstance().getRegistry();
 
         this.initMiddlewares();
         this.initRoutes();
@@ -41,9 +49,24 @@ export default class Server {
     }
 
     private initRoutes() {
-        this.app.use("/api/v1/posts", postRoute);
-        this.app.use("/api/v1/courses", courseRoute);
-        this.app.use("/api/v1/auth", authRoute);
+        this.app.use(
+            "/api-docs",
+            swaggerUi.serve,
+            swaggerUi.setup(
+                new OpenApiGeneratorV3(
+                    this.apiRegistry.definitions
+                ).generateDocument({
+                    openapi: "3.0.0",
+                    info: {
+                        title: "API Documentation",
+                        version: "1.0.0",
+                    },
+                })
+            )
+        );
+        this.app.use("/api/posts", postRoute);
+        this.app.use("/api/courses", courseRoute);
+        this.app.use("/api/auth", authRoute);
 
         this.app.use(notFound);
         this.app.use(errorHandler);

@@ -1,5 +1,6 @@
 import "zod-openapi/extend";
 import { z } from "zod";
+import { access } from "fs";
 
 export const TokenSchema = z.object({
     id: z.number().openapi({

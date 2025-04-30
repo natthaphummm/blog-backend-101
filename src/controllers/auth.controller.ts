@@ -29,6 +29,9 @@ export default class AuthController {
     }
 
     async logout(req: Request, res: Response) {
+        if (!req.cookies.refreshToken) {
+            throw new ApiError(401, "Unauthorized");
+        }
         await this.service.logout(req.cookies.refreshToken);
         res.clearCookie("refreshToken", { path: "/" });
         res.json({ message: "Logged out successfully" });

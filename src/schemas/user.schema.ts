@@ -28,11 +28,9 @@ export const UserSchema = z.object({
     }),
 });
 
-export const UserCreateSchema = UserSchema.omit({
-    id: true,
-    role: true,
-    createdAt: true,
-    updatedAt: true,
+export const UserCreateSchema = UserSchema.pick({
+    email: true,
+    password: true,
 });
 
 export const UserUpdateSchema = UserSchema.partial().omit({
@@ -48,9 +46,7 @@ export const UserLoginSchema = UserSchema.pick({
 });
 
 export const UserCreateResponseSchema = UserSchema.omit({
-    id: true,
     password: true,
-    createdAt: true,
     updatedAt: true,
 });
 

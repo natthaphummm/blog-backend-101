@@ -29,6 +29,6 @@ export default class CourseController {
 
     async delete(req: Request, res: Response) {
         await this.service.delete(Number(req.params.id));
-        res.status(204).send();
+        res.status(204).json({ message: "Course deleted" });
     }
 }

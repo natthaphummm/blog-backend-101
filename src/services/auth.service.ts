@@ -15,7 +15,7 @@ export default class AuthService implements IAuthService {
             where: { email: data.email },
         });
         if (userExists) {
-            throw new ApiError(400, "User already exists");
+            throw new ApiError(409, "User already exists");
         }
 
         const hashedPassword = await bcrypt.hash(data.password, 10);
@@ -66,12 +66,12 @@ export default class AuthService implements IAuthService {
     }
 
     async logout(refreshToken: string): Promise<void> {
-        const token = await prisma.token.findFirst({
+        const token = await prisma.token.findUnique({
             where: { refreshToken },
         });
 
         if (!token) {
-            throw new ApiError(401, "Invalid token");
+            throw new ApiError(401, "Unauthorized");
         }
 
         await prisma.token.updateMany({
