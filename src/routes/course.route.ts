@@ -86,6 +86,7 @@ export class CourseRoute extends BaseRoute {
             path: "/api/courses",
             tags: ["Courses"],
             summary: "Create a course",
+            security: [{ bearerAuth: [] }],
             requestBody: {
                 required: true,
                 content: {
@@ -123,6 +124,7 @@ export class CourseRoute extends BaseRoute {
             path: "/api/courses/{id}",
             tags: ["Courses"],
             summary: "Update a course",
+            security: [{ bearerAuth: [] }],
             parameters: [
                 {
                     name: "id",
@@ -170,6 +172,7 @@ export class CourseRoute extends BaseRoute {
             path: "/api/courses/{id}",
             tags: ["Courses"],
             summary: "Delete a course",
+            security: [{ bearerAuth: [] }],
             parameters: [
                 {
                     name: "id",
