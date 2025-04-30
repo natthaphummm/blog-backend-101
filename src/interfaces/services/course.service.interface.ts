@@ -1,4 +1,4 @@
-import { Course, CourseCreate, CourseUpdate } from "../../schemas";
+import { Course, CourseCreate, CourseUpdate } from '../../schemas';
 
 export interface ICourseService {
     getAll(): Promise<Course[]>;

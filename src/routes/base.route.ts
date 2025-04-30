@@ -1,9 +1,10 @@
-import { Router } from "express";
-import { OpenAPIRegistry } from "@asteasolutions/zod-to-openapi";
-import { ApiRegistry } from "../utils/apiRegistry";
+import { Router } from 'express';
+import { OpenAPIRegistry } from '@asteasolutions/zod-to-openapi';
+import { ApiRegistry } from '../utils/apiRegistry';
 
 export default abstract class BaseRoute {
     protected readonly router: Router;
+
     protected readonly controller: any;
     protected readonly registry: OpenAPIRegistry;
 

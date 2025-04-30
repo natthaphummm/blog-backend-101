@@ -1,7 +1,7 @@
-import BaseRoute from "./base.route";
-import AuthController from "../controllers/auth.controller";
-import AuthService from "../services/auth.service";
-import { validate } from "../middleware/validate.middleware";
+import BaseRoute from './base.route';
+import AuthController from '../controllers/auth.controller';
+import AuthService from '../services/auth.service';
+import { validate } from '../middleware/validate.middleware';
 import {
     UserCreate,
     UserCreateSchema,
@@ -9,8 +9,8 @@ import {
     UserLogin,
     UserLoginSchema,
     UserLoginResponseSchema,
-} from "../schemas";
-import { zodToJsonSchema } from "zod-to-json-schema";
+} from '../schemas';
+import { zodToJsonSchema } from 'zod-to-json-schema';
 
 export class AuthRoute extends BaseRoute {
     constructor() {
@@ -19,114 +19,114 @@ export class AuthRoute extends BaseRoute {
 
     protected initRoutes(): void {
         this.router.post(
-            "/register",
+            '/register',
             validate(UserCreateSchema),
-            this.controller.register.bind(this.controller)
+            this.controller.register.bind(this.controller),
         );
         this.registry.registerPath({
-            method: "post",
-            path: "/api/auth/register",
-            tags: ["Auth"],
-            summary: "Register a new user",
+            method: 'post',
+            path: '/api/auth/register',
+            tags: ['Auth'],
+            summary: 'Register a new user',
             requestBody: {
                 content: {
-                    "application/json": {
+                    'application/json': {
                         schema: zodToJsonSchema(UserCreateSchema) as UserCreate,
                     },
                 },
             },
             responses: {
                 201: {
-                    description: "User created",
+                    description: 'User created',
                     content: {
-                        "application/json": {
+                        'application/json': {
                             schema: UserCreateResponseSchema,
                         },
                     },
                 },
                 400: {
-                    description: "Bad request",
+                    description: 'Bad request',
                 },
                 409: {
-                    description: "User already exists",
+                    description: 'User already exists',
                 },
             },
         });
 
         this.router.post(
-            "/login",
+            '/login',
             validate(UserLoginSchema),
-            this.controller.login.bind(this.controller)
+            this.controller.login.bind(this.controller),
         );
         this.registry.registerPath({
-            method: "post",
-            path: "/api/auth/login",
-            tags: ["Auth"],
-            summary: "Login a user",
+            method: 'post',
+            path: '/api/auth/login',
+            tags: ['Auth'],
+            summary: 'Login a user',
             requestBody: {
                 content: {
-                    "application/json": {
+                    'application/json': {
                         schema: zodToJsonSchema(UserLoginSchema) as UserLogin,
                     },
                 },
             },
             responses: {
                 200: {
-                    description: "User logged in",
+                    description: 'User logged in',
                     content: {
-                        "application/json": {
+                        'application/json': {
                             schema: UserLoginResponseSchema,
                         },
                     },
                 },
                 401: {
-                    description: "Invalid password",
+                    description: 'Invalid password',
                 },
                 404: {
-                    description: "User not found",
+                    description: 'User not found',
                 },
             },
         });
 
         this.router.post(
-            "/logout",
-            this.controller.logout.bind(this.controller)
+            '/logout',
+            this.controller.logout.bind(this.controller),
         );
         this.registry.registerPath({
-            method: "post",
-            path: "/api/auth/logout",
-            tags: ["Auth"],
-            summary: "Logout a user",
+            method: 'post',
+            path: '/api/auth/logout',
+            tags: ['Auth'],
+            summary: 'Logout a user',
             responses: {
                 200: {
-                    description: "User logged out",
+                    description: 'User logged out',
                 },
                 401: {
-                    description: "Unauthorized",
+                    description: 'Unauthorized',
                 },
             },
         });
 
         this.router.post(
-            "/refresh-token",
-            this.controller.refreshToken.bind(this.controller)
+            '/refresh-token',
+            this.controller.refreshToken.bind(this.controller),
         );
         this.registry.registerPath({
-            method: "post",
-            path: "/api/auth/refresh-token",
-            tags: ["Auth"],
-            summary: "Refresh a token",
+            method: 'post',
+            path: '/api/auth/refresh-token',
+            tags: ['Auth'],
+            summary: 'Refresh a token',
             responses: {
                 200: {
-                    description: "Token refreshed",
+                    description: 'Token refreshed',
                     content: {
-                        "application/json": {
+                        'application/json': {
                             schema: UserLoginResponseSchema,
                         },
                     },
                 },
                 401: {
-                    description: "Unauthorized",
+                    description: 'Unauthorized',
                 },
             },
         });

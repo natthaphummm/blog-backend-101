@@ -1,22 +1,23 @@
-import { Request, Response, NextFunction } from "express";
-import ApiError from "../utils/apiError";
+import { Request, Response, NextFunction } from 'express';
+import ApiError from '../utils/apiError';
 
 export const errorHandler = (
     err: any,
     req: Request,
     res: Response,
-    next: NextFunction
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    next: NextFunction,
 ) => {
     let error = err;
 
     if (!(error instanceof ApiError)) {
         const statusCode = error.statusCode || 500;
-        const message = error.message || "Internal Server Error";
+        const message = error.message || 'Internal Server Error';
         error = new ApiError(
             statusCode,
             message,
             error?.errors || [],
-            error.stack
+            error.stack,
         );
     }
 
@@ -24,7 +25,7 @@ export const errorHandler = (
         success: false,
         message: error.message,
         errors: error.errors,
-        stack: process.env.NODE_ENV === "development" ? error.stack : undefined,
+        stack: process.env.NODE_ENV === 'development' ? error.stack : undefined,
     };
 
     res.status(error.statusCode).json(response);

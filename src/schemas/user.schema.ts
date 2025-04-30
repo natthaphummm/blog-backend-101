@@ -1,30 +1,30 @@
-import "zod-openapi/extend";
-import { z } from "zod";
+import 'zod-openapi/extend';
+import { z } from 'zod';
 
 export const UserSchema = z.object({
     id: z.number().openapi({
-        description: "The unique identifier for the user",
+        description: 'The unique identifier for the user',
         example: 1,
     }),
     email: z.string().email().openapi({
-        description: "The email of the user",
-        example: "john.doe@example.com",
+        description: 'The email of the user',
+        example: 'john.doe@example.com',
     }),
     password: z.string().openapi({
-        description: "The password of the user",
-        example: "password123",
+        description: 'The password of the user',
+        example: 'password123',
     }),
-    role: z.enum(["ADMIN", "USER"]).openapi({
-        description: "The role of the user",
-        example: "USER",
+    role: z.enum(['ADMIN', 'USER']).openapi({
+        description: 'The role of the user',
+        example: 'USER',
     }),
     createdAt: z.date().openapi({
-        description: "The date and time the user was created",
-        example: "2023-01-01T00:00:00.000Z",
+        description: 'The date and time the user was created',
+        example: '2023-01-01T00:00:00.000Z',
     }),
     updatedAt: z.date().openapi({
-        description: "The date and time the user was last updated",
-        example: "2023-01-01T00:00:00.000Z",
+        description: 'The date and time the user was last updated',
+        example: '2023-01-01T00:00:00.000Z',
     }),
 });
 
@@ -52,14 +52,14 @@ export const UserCreateResponseSchema = UserSchema.omit({
 
 export const UserLoginResponseSchema = z.object({
     accessToken: z.string().openapi({
-        description: "The access token for the user",
+        description: 'The access token for the user',
         example:
-            "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c",
+            'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c',
     }),
     refreshToken: z.string().openapi({
-        description: "The refresh token for the user",
+        description: 'The refresh token for the user',
         example:
-            "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c",
+            'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c',
     }),
     user: UserSchema.pick({
         id: true,

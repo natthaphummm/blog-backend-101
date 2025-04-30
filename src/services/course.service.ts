@@ -1,7 +1,7 @@
-import { ICourseService } from "../interfaces";
-import { Course, CourseCreate, CourseUpdate } from "../schemas";
-import prisma from "../config/prisma";
-import ApiError from "../utils/apiError";
+import { ICourseService } from '../interfaces';
+import { Course, CourseCreate, CourseUpdate } from '../schemas';
+import prisma from '../config/prisma';
+import ApiError from '../utils/apiError';
 
 export default class CourseService implements ICourseService {
     async getAll(): Promise<Course[]> {
@@ -14,7 +14,7 @@ export default class CourseService implements ICourseService {
             where: { id },
         });
         if (!course) {
-            throw new ApiError(404, "Course not found");
+            throw new ApiError(404, 'Course not found');
         }
         return course as Course;
     }
@@ -31,7 +31,7 @@ export default class CourseService implements ICourseService {
             where: { id },
         });
         if (!courseExists) {
-            throw new ApiError(404, "Course not found");
+            throw new ApiError(404, 'Course not found');
         }
         const course = await prisma.course.update({
             where: { id },
@@ -45,7 +45,7 @@ export default class CourseService implements ICourseService {
             where: { id },
         });
         if (!courseExists) {
-            throw new ApiError(404, "Course not found");
+            throw new ApiError(404, 'Course not found');
         }
         await prisma.course.delete({
             where: { id },

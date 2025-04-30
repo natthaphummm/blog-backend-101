@@ -1,7 +1,7 @@
-import { IPostService } from "../interfaces";
-import { Post, PostCreate, PostUpdate } from "../schemas";
-import prisma from "../config/prisma";
-import ApiError from "../utils/apiError";
+import { IPostService } from '../interfaces';
+import { Post, PostCreate, PostUpdate } from '../schemas';
+import prisma from '../config/prisma';
+import ApiError from '../utils/apiError';
 
 export default class PostService implements IPostService {
     async getAll(): Promise<Post[]> {
@@ -14,7 +14,7 @@ export default class PostService implements IPostService {
             where: { id },
         });
         if (!post) {
-            throw new ApiError(404, "Post not found");
+            throw new ApiError(404, 'Post not found');
         }
         return post as Post;
     }
@@ -31,7 +31,7 @@ export default class PostService implements IPostService {
             where: { id },
         });
         if (!postExists) {
-            throw new ApiError(404, "Post not found");
+            throw new ApiError(404, 'Post not found');
         }
 
         const post = await prisma.post.update({
@@ -46,7 +46,7 @@ export default class PostService implements IPostService {
             where: { id },
         });
         if (!postExists) {
-            throw new ApiError(404, "Post not found");
+            throw new ApiError(404, 'Post not found');
         }
 
         await prisma.post.delete({

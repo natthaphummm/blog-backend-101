@@ -1,38 +1,38 @@
-import "zod-openapi/extend";
-import { z } from "zod";
+import 'zod-openapi/extend';
+import { z } from 'zod';
 
 export const CourseSchema = z.object({
     id: z.number().openapi({
-        description: "The unique identifier for the course",
+        description: 'The unique identifier for the course',
         example: 1,
     }),
     title: z.string().openapi({
-        description: "The title of the course",
-        example: "Introduction to Programming",
+        description: 'The title of the course',
+        example: 'Introduction to Programming',
     }),
     slug: z.string().openapi({
-        description: "The slug of the course",
-        example: "introduction-to-programming",
+        description: 'The slug of the course',
+        example: 'introduction-to-programming',
     }),
     description: z.string().openapi({
-        description: "The description of the course",
-        example: "This course will teach you the basics of programming.",
+        description: 'The description of the course',
+        example: 'This course will teach you the basics of programming.',
     }),
     published: z.boolean().openapi({
-        description: "Whether the course is published or not",
+        description: 'Whether the course is published or not',
         example: true,
     }),
     authorId: z.number().openapi({
-        description: "The ID of the author of the course",
+        description: 'The ID of the author of the course',
         example: 1,
     }),
     createdAt: z.date().openapi({
-        description: "The date and time the course was created",
-        example: "2023-01-01T00:00:00.000Z",
+        description: 'The date and time the course was created',
+        example: '2023-01-01T00:00:00.000Z',
     }),
     updatedAt: z.date().openapi({
-        description: "The date and time the course was last updated",
-        example: "2023-01-01T00:00:00.000Z",
+        description: 'The date and time the course was last updated',
+        example: '2023-01-01T00:00:00.000Z',
     }),
 });
 

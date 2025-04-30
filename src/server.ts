@@ -1,23 +1,22 @@
-import express, { Express } from "express";
-import cors from "cors";
-import helmet from "helmet";
-import cookieParser from "cookie-parser";
-import { rateLimit } from "express-rate-limit";
-import swaggerUi from "swagger-ui-express";
-import { config } from "./config/env";
+import express, { Express } from 'express';
+import cors from 'cors';
+import helmet from 'helmet';
+import cookieParser from 'cookie-parser';
+import { rateLimit } from 'express-rate-limit';
+import swaggerUi from 'swagger-ui-express';
+import { config } from './config/env';
 
-import { errorHandler, notFound } from "./middleware/error.middleware";
-import { ApiRegistry } from "./utils/apiRegistry";
+import { errorHandler, notFound } from './middleware/error.middleware';
+import { ApiRegistry } from './utils/apiRegistry';
 
-import postRoute from "./routes/post.route";
-import courseRoute from "./routes/course.route";
-import authRoute from "./routes/auth.route";
+import postRoute from './routes/post.route';
+import courseRoute from './routes/course.route';
+import authRoute from './routes/auth.route';
 
 import {
     OpenAPIRegistry,
     OpenApiGeneratorV3,
-} from "@asteasolutions/zod-to-openapi";
-import { z } from "zod";
+} from '@asteasolutions/zod-to-openapi';
 
 export default class Server {
     private readonly app: Express;
@@ -45,36 +44,36 @@ export default class Server {
                 max: 60,
                 standardHeaders: true,
                 legacyHeaders: false,
-            })
+            }),
         );
     }
 
     private initRoutes() {
-        this.apiRegistry.registerComponent("securitySchemes", "bearerAuth", {
-            type: "http",
-            scheme: "bearer",
-            bearerFormat: "JWT",
-            description: "Enter JWT token",
+        this.apiRegistry.registerComponent('securitySchemes', 'bearerAuth', {
+            type: 'http',
+            scheme: 'bearer',
+            bearerFormat: 'JWT',
+            description: 'Enter JWT token',
         });
 
         this.app.use(
-            "/api-docs",
+            '/api-docs',
             swaggerUi.serve,
             swaggerUi.setup(
                 new OpenApiGeneratorV3(
-                    this.apiRegistry.definitions
+                    this.apiRegistry.definitions,
                 ).generateDocument({
-                    openapi: "3.0.0",
+                    openapi: '3.0.0',
                     info: {
-                        title: "API Documentation",
-                        version: "1.0.0",
+                        title: 'API Documentation',
+                        version: '1.0.0',
                     },
-                })
-            )
+                }),
+            ),
         );
-        this.app.use("/api/posts", postRoute);
-        this.app.use("/api/courses", courseRoute);
-        this.app.use("/api/auth", authRoute);
+        this.app.use('/api/posts', postRoute);
+        this.app.use('/api/courses', courseRoute);
+        this.app.use('/api/auth', authRoute);
 
         this.app.use(notFound);
         this.app.use(errorHandler);

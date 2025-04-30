@@ -1,4 +1,4 @@
-import { Post, PostCreate, PostUpdate } from "../../schemas";
+import { Post, PostCreate, PostUpdate } from '../../schemas';
 
 export interface IPostService {
     getAll(): Promise<Post[]>;

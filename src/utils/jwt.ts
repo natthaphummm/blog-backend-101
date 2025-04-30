@@ -1,6 +1,6 @@
-import jwt from "jsonwebtoken";
-import { config } from "../config/env";
-import { UserPayload } from "../schemas";
+import jwt from 'jsonwebtoken';
+import { config } from '../config/env';
+import { UserPayload } from '../schemas';
 
 export const signAccessToken = ({ id, role }: UserPayload) => {
     return jwt.sign({ id, role }, config.jwt.accessSecret, {

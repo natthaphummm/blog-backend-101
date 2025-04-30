@@ -1,15 +1,16 @@
 export default class ApiError extends Error {
     statusCode: number;
     success: boolean;
+
     errors: any[];
     data: null;
     stack?: string;
 
     constructor(
         statusCode: number,
-        message = "Something went wrong",
+        message = 'Something went wrong',
         errors = [],
-        stack = ""
+        stack = '',
     ) {
         super(message);
         this.statusCode = statusCode;

@@ -1,4 +1,4 @@
-import { OpenAPIRegistry } from "@asteasolutions/zod-to-openapi";
+import { OpenAPIRegistry } from '@asteasolutions/zod-to-openapi';
 
 export class ApiRegistry {
     private static instance: ApiRegistry;
