@@ -91,6 +91,7 @@ export class PostRoute extends BaseRoute {
             path: "/api/posts",
             tags: ["Posts"],
             summary: "Create a post",
+            security: [{ bearerAuth: [] }],
             requestBody: {
                 required: true,
                 content: {
@@ -126,6 +127,7 @@ export class PostRoute extends BaseRoute {
             path: "/api/posts/{id}",
             tags: ["Posts"],
             summary: "Update a post",
+            security: [{ bearerAuth: [] }],
             parameters: [
                 {
                     name: "id",
@@ -175,6 +177,7 @@ export class PostRoute extends BaseRoute {
             path: "/api/posts/{id}",
             tags: ["Posts"],
             summary: "Delete a post",
+            security: [{ bearerAuth: [] }],
             parameters: [
                 {
                     name: "id",

@@ -17,6 +17,7 @@ import {
     OpenAPIRegistry,
     OpenApiGeneratorV3,
 } from "@asteasolutions/zod-to-openapi";
+import { z } from "zod";
 
 export default class Server {
     private readonly app: Express;
@@ -49,6 +50,13 @@ export default class Server {
     }
 
     private initRoutes() {
+        this.apiRegistry.registerComponent("securitySchemes", "bearerAuth", {
+            type: "http",
+            scheme: "bearer",
+            bearerFormat: "JWT",
+            description: "Enter JWT token",
+        });
+
         this.app.use(
             "/api-docs",
             swaggerUi.serve,
