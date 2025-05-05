@@ -1,13 +1,14 @@
-import { IAuthService } from '../interfaces';
-import { UserCreate, UserCreateResponse, UserLoginResponse } from '../schemas';
-import prisma from '../config/prisma';
-import bcrypt from 'bcryptjs';
-import ApiError from '../utils/apiError';
+import { IAuthService } from "../interfaces";
+import { UserCreate, UserCreateResponse, UserLoginResponse } from "../schemas";
+import prisma from "../config/prisma";
+import bcrypt from "bcryptjs";
+import ApiError from "../utils/apiError";
 import {
     signAccessToken,
     signRefreshToken,
+    verifyAccessToken,
     verifyRefreshToken,
-} from '../utils/jwt';
+} from "../utils/jwt";
 
 export default class AuthService implements IAuthService {
     async register(data: UserCreate): Promise<UserCreateResponse> {
@@ -15,7 +16,7 @@ export default class AuthService implements IAuthService {
             where: { email: data.email },
         });
         if (userExists) {
-            throw new ApiError(409, 'User already exists');
+            throw new ApiError(409, "User already exists");
         }
 
         const hashedPassword = await bcrypt.hash(data.password, 10);
@@ -34,11 +35,11 @@ export default class AuthService implements IAuthService {
             where: { email: data.email },
         });
         if (!user) {
-            throw new ApiError(404, 'User not found');
+            throw new ApiError(404, "User not found");
         }
 
         if (!bcrypt.compareSync(data.password, user.password)) {
-            throw new ApiError(401, 'Invalid password');
+            throw new ApiError(401, "Invalid password");
         }
 
         const accessToken = signAccessToken({
@@ -71,7 +72,7 @@ export default class AuthService implements IAuthService {
         });
 
         if (!token) {
-            throw new ApiError(401, 'Unauthorized');
+            throw new ApiError(401, "Unauthorized");
         }
 
         await prisma.token.updateMany({
@@ -83,11 +84,11 @@ export default class AuthService implements IAuthService {
     }
 
     async refreshToken(
-        refreshToken: string,
+        refreshToken: string
     ): Promise<{ accessToken: string; newRefreshToken: string }> {
         const payload = verifyRefreshToken(refreshToken);
         if (!payload) {
-            throw new ApiError(401, 'Invalid refresh token');
+            throw new ApiError(401, "Invalid refresh token");
         }
 
         const storeToken = await prisma.token.findUnique({
@@ -95,7 +96,7 @@ export default class AuthService implements IAuthService {
         });
 
         if (!storeToken || storeToken.revoked) {
-            throw new ApiError(401, 'Token revoked or not found');
+            throw new ApiError(401, "Token revoked or not found");
         }
 
         const user = await prisma.user.findUnique({
@@ -103,7 +104,7 @@ export default class AuthService implements IAuthService {
         });
 
         if (!user) {
-            throw new ApiError(401, 'User not found');
+            throw new ApiError(401, "User not found");
         }
 
         await prisma.token.update({
@@ -127,5 +128,19 @@ export default class AuthService implements IAuthService {
         });
 
         return { accessToken, newRefreshToken };
+    }
+
+    async me(accessToken: string): Promise<UserCreateResponse> {
+        const payload = verifyAccessToken(accessToken);
+        if (!payload) {
+            throw new ApiError(401, "Invalid access token");
+        }
+        const user = await prisma.user.findUnique({
+            where: { id: payload.id },
+        });
+        if (!user) {
+            throw new ApiError(404, "User not found");
+        }
+        return user as UserCreateResponse;
     }
 }

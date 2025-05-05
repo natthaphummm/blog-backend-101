@@ -2,13 +2,14 @@ import {
     UserCreate,
     UserCreateResponse,
     UserLoginResponse,
-} from '../../schemas';
+} from "../../schemas";
 
 export interface IAuthService {
     register(data: UserCreate): Promise<UserCreateResponse>;
     login(data: UserCreate): Promise<UserLoginResponse>;
     logout(refreshToken: string): Promise<void>;
     refreshToken(
-        refreshToken: string,
+        refreshToken: string
     ): Promise<{ accessToken: string; newRefreshToken: string }>;
+    me(accessToken: string): Promise<UserCreateResponse>;
 }
