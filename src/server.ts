@@ -12,6 +12,7 @@ import { ApiRegistry } from "./utils/apiRegistry";
 import postRoute from "./routes/post.route";
 import courseRoute from "./routes/course.route";
 import authRoute from "./routes/auth.route";
+import lessonRoute from "./routes/lesson.route";
 
 import {
     OpenAPIRegistry,
@@ -43,14 +44,14 @@ export default class Server {
         this.app.use(express.json());
         this.app.use(express.urlencoded({ extended: true }));
         this.app.use(cookieParser());
-        this.app.use(
-            rateLimit({
-                windowMs: 1 * 60 * 1000,
-                max: 60,
-                standardHeaders: true,
-                legacyHeaders: false,
-            })
-        );
+        // this.app.use(
+        //     rateLimit({
+        //         windowMs: 1 * 60 * 1000,
+        //         max: 60,
+        //         standardHeaders: true,
+        //         legacyHeaders: false,
+        //     })
+        // );
     }
 
     private initRoutes() {
@@ -78,6 +79,7 @@ export default class Server {
         );
         this.app.use("/api/posts", postRoute);
         this.app.use("/api/courses", courseRoute);
+        this.app.use("/api/lessons", lessonRoute);
         this.app.use("/api/auth", authRoute);
 
         this.app.use(notFound);

@@ -56,6 +56,14 @@ export const CourseUpdateSchema = CourseSchema.partial().omit({
     updatedAt: true,
 });
 
+export const CourseQuerySchema = z.object({
+    published: z.preprocess(
+        (val) => (val === "true" ? true : val === "false" ? false : val),
+        z.boolean().optional()
+    ),
+});
+
 export type Course = z.infer<typeof CourseSchema>;
 export type CourseCreate = z.infer<typeof CourseCreateSchema>;
 export type CourseUpdate = z.infer<typeof CourseUpdateSchema>;
+export type CourseQuery = z.infer<typeof CourseQuerySchema>;

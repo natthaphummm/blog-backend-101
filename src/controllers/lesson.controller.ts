@@ -1,15 +1,11 @@
 import { Request, Response } from "express";
-import { IPostService } from "../interfaces";
+import { ILessonService } from "../interfaces";
 
-interface ValidRequest extends Request {
-    validatedQuery?: any;
-}
+export default class LessonController {
+    constructor(private readonly service: ILessonService) {}
 
-export default class PostController {
-    constructor(private readonly service: IPostService) {}
-
-    async getAll(req: ValidRequest, res: Response) {
-        const result = await this.service.getAll(req.validatedQuery);
+    async getAll(req: Request, res: Response) {
+        const result = await this.service.getAll();
         res.status(200).json(result);
     }
 
@@ -18,8 +14,8 @@ export default class PostController {
         res.status(200).json(result);
     }
 
-    async getBySlug(req: Request, res: Response) {
-        const result = await this.service.getBySlug(req.params.slug);
+    async getByCourseId(req: Request, res: Response) {
+        const result = await this.service.getByCourseId(Number(req.params.id));
         res.status(200).json(result);
     }
 
@@ -38,6 +34,6 @@ export default class PostController {
 
     async delete(req: Request, res: Response) {
         await this.service.delete(Number(req.params.id));
-        res.status(204).send();
+        res.status(204).json({ message: "Lesson deleted" });
     }
 }

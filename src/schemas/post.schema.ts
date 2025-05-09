@@ -1,5 +1,5 @@
 import "zod-openapi/extend";
-import { z } from "zod";
+import { boolean, z } from "zod";
 
 export const PostSchema = z.object({
     id: z.number().openapi({
@@ -56,6 +56,14 @@ export const PostUpdateSchema = PostSchema.partial().omit({
     updatedAt: true,
 });
 
+export const PostQuerySchema = z.object({
+    published: z.preprocess(
+        (val) => (val === "true" ? true : val === "false" ? false : val),
+        z.boolean().optional()
+    ),
+});
+
 export type Post = z.infer<typeof PostSchema>;
 export type PostCreate = z.infer<typeof PostCreateSchema>;
 export type PostUpdate = z.infer<typeof PostUpdateSchema>;
+export type PostQuery = z.infer<typeof PostQuerySchema>;

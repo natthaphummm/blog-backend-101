@@ -1,7 +1,7 @@
 import BaseRoute from "./base.route";
 import AuthController from "../controllers/auth.controller";
 import AuthService from "../services/auth.service";
-import { validate } from "../middleware/validate.middleware";
+import { validateBody } from "../middleware/validate.middleware";
 import { authenticate } from "../middleware/auth.middleware";
 import {
     UserCreate,
@@ -21,7 +21,7 @@ export class AuthRoute extends BaseRoute {
     protected initRoutes(): void {
         this.router.post(
             "/register",
-            validate(UserCreateSchema),
+            validateBody(UserCreateSchema),
             this.controller.register.bind(this.controller)
         );
         this.registry.registerPath({
@@ -56,7 +56,7 @@ export class AuthRoute extends BaseRoute {
 
         this.router.post(
             "/login",
-            validate(UserLoginSchema),
+            validateBody(UserLoginSchema),
             this.controller.login.bind(this.controller)
         );
         this.registry.registerPath({
