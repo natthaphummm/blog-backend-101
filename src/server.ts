@@ -44,14 +44,14 @@ export default class Server {
         this.app.use(express.json());
         this.app.use(express.urlencoded({ extended: true }));
         this.app.use(cookieParser());
-        // this.app.use(
-        //     rateLimit({
-        //         windowMs: 1 * 60 * 1000,
-        //         max: 60,
-        //         standardHeaders: true,
-        //         legacyHeaders: false,
-        //     })
-        // );
+        this.app.use(
+            rateLimit({
+                windowMs: 1 * 60 * 1000,
+                max: 100,
+                standardHeaders: true,
+                legacyHeaders: false,
+            })
+        );
     }
 
     private initRoutes() {

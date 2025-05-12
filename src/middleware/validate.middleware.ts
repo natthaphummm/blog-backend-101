@@ -8,7 +8,6 @@ interface ValidRequest extends Request {
 export const validateBody = (schema: AnyZodObject) => {
     return (req: Request, res: Response, next: NextFunction) => {
         const result = schema.safeParse(req.body);
-        console.log(result.data);
         if (!result.success) {
             res.status(400).json({
                 success: false,
