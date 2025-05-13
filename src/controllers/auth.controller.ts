@@ -19,7 +19,7 @@ export default class AuthController {
         res.cookie("refreshToken", refreshToken, {
             httpOnly: true,
             secure: config.nodeEnv === "production",
-            sameSite: "lax",
+            sameSite: "none",
             path: "/",
             maxAge: 7 * 24 * 60 * 60 * 1000,
         }).json({
@@ -48,7 +48,7 @@ export default class AuthController {
         res.cookie("refreshToken", newRefreshToken, {
             httpOnly: true,
             secure: config.nodeEnv === "production",
-            sameSite: "lax",
+            sameSite: "none",
             path: "/",
             maxAge: 7 * 24 * 60 * 60 * 1000,
         }).json({
