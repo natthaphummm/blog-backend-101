@@ -4,6 +4,8 @@
 
 This project is a RESTful API server built with Node.js, Express, TypeScript, and Prisma ORM. It provides a backend for managing blog posts, courses, lessons, and user authentication, supporting both blogging and e-learning features.
 
+> This project is created to practice backend development.
+
 ## Features
 
 -   **User Authentication**: Register, login, logout, JWT-based authentication, and role-based authorization (USER, ADMIN).
